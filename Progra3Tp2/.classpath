@@ -4,5 +4,6 @@
 	<classpathentry excluding="main/" kind="src" path="src"/>
 	<classpathentry kind="src" path="src/main"/>
 	<classpathentry kind="lib" path="src/JMapViewer.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

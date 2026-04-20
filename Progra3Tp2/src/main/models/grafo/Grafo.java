@@ -9,13 +9,17 @@ public class Grafo<T>
 	private int n; // numero de vertices
 	private Double[][] A;
 	protected List<T> vertices; // para mapear indice -> Objeto T
-	
+	// necesito lista de aristas?
+	protected List<Arista> aristas;
 	public Grafo(List<T> vertices)
 	{
 		this.n = vertices.size();
 		this.vertices = vertices;
 		this.A = new Double[n][n];
 		
+	}
+	public List<Arista> getAristas() {
+		return aristas;
 	}
 	
 	public List<T> getVertices() {
@@ -30,6 +34,8 @@ public class Grafo<T>
 
 		A[i][j] = peso;
 		A[j][i] = peso;
+		Arista arista = new Arista(i, j, peso);
+		aristas.add(arista);
 	}
 	
 	
