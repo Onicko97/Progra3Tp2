@@ -1,4 +1,4 @@
-package test.logic;
+package test.models.grafo;
 
 public class GrafoTest {
 
