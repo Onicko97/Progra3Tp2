@@ -8,7 +8,7 @@ public class Grafo<T>
 {
 	private int n; // numero de vertices
 	private Double[][] A;
-	private List<T> vertices; // para mapear indice -> Objeto T
+	protected List<T> vertices; // para mapear indice -> Objeto T
 	
 	public Grafo(List<T> vertices)
 	{
@@ -18,6 +18,9 @@ public class Grafo<T>
 		
 	}
 	
+	public List<T> getVertices() {
+		return vertices;
+	}
 	// Agregado de aristas
 	public void agregarArista(int i, int j, double peso)
 	{
@@ -28,6 +31,8 @@ public class Grafo<T>
 		A[i][j] = peso;
 		A[j][i] = peso;
 	}
+	
+	
 	
 	// Eliminacion de aristas
 	public void eliminarArista(int i, int j)
