@@ -1,5 +1,6 @@
 package models.grafo;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,11 +12,13 @@ public class Grafo<T>
 	protected List<T> vertices; // para mapear indice -> Objeto T
 	// necesito lista de aristas?
 	protected List<Arista> aristas;
+	
 	public Grafo(List<T> vertices)
 	{
 		this.n = vertices.size();
 		this.vertices = vertices;
 		this.A = new Double[n][n];
+		this.aristas = new ArrayList<Arista>();
 		
 	}
 	public List<Arista> getAristas() {
@@ -23,9 +26,11 @@ public class Grafo<T>
 	}
 	
 	public List<T> getVertices() {
+		System.out.println("hello");
 		return vertices;
 	}
 	// Agregado de aristas
+	
 	public void agregarArista(int i, int j, double peso)
 	{
 		verificarVertice(i);
