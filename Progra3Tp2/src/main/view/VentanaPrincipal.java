@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -35,8 +36,11 @@ public class VentanaPrincipal extends JFrame {
 	public void crearPanel() {
 		panel = new JPanel();
 		panel.setBackground(Color.BLACK);
+		panel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		panel.setPreferredSize(new Dimension(200, 0));
 		this.getContentPane().add(panel, BorderLayout.EAST);
+		
+		panel.add(new BotonAgregarLocalidad());
 	}
 	
 	public void crearMapa() {
