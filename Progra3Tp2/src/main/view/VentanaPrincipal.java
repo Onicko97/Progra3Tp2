@@ -14,6 +14,10 @@ import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
+import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JButton;
 
 public class VentanaPrincipal extends JFrame {
 	
@@ -35,16 +39,28 @@ public class VentanaPrincipal extends JFrame {
 	
 	public void crearPanel() {
 		panel = new JPanel();
-		panel.setBackground(Color.BLACK);
+		panel.setBackground(SystemColor.menu);
 		panel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		panel.setPreferredSize(new Dimension(200, 0));
 		this.getContentPane().add(panel, BorderLayout.EAST);
+		panel.setLayout(null);
 		
-		panel.add(new BotonAgregarLocalidad());
+		JButton btnAgregarLocalidad = new JButton("Agregar Localidad");
+		btnAgregarLocalidad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Formulario formulario = new Formulario();
+				formulario.setVisible(true);
+			}
+		});
+		btnAgregarLocalidad.setBounds(27, 49, 149, 23);
+		panel.add(btnAgregarLocalidad);
+		
+		
 	}
 	
 	public void crearMapa() {
 		mapa = new JMapViewer();
+		mapa.setDisplayPosition(new Coordinate(-35, -60), 4);
 		this.getContentPane().add(mapa);
 	}
 	
@@ -82,5 +98,4 @@ public class VentanaPrincipal extends JFrame {
 		agregarVerticeAlMapa("2", coor2);
 		agregarArista(poligon);
 	}
-
 }
