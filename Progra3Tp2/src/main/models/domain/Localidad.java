@@ -13,4 +13,20 @@ public class Localidad {
 		this.provincia = provincia;
 		this.coordenadas = new Coordinate(latitud, longitud);
 	}
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public double getLatitud() {
+        return coordenadas.getLat();
+    }
+
+    public double getLongitud() {
+        return coordenadas.getLon();
+    }
 }

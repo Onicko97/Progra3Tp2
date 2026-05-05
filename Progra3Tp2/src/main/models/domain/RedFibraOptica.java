@@ -1,5 +1,7 @@
 package models.domain;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 import models.grafo.Grafo;
@@ -18,4 +20,5 @@ public class RedFibraOptica extends Grafo<Localidad> {
 	public void conectarLocalidades() {} //arista
 	public void existeRuta() {} //existe ruta entre 2 localidades?
 
+	
 }
