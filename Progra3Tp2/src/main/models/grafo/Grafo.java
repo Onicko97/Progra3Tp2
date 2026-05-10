@@ -26,7 +26,7 @@ public class Grafo<T>
 	}
 	
 	public List<T> getVertices() {
-		System.out.println("hello");
+		//System.out.println("hello");
 		return vertices;
 	}
 	// Agregado de aristas

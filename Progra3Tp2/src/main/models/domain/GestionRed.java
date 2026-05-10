@@ -15,7 +15,11 @@ public class GestionRed {
     private double costoFijo;
     private double costoTotal;
     
-	public GestionRed() {}
+	public GestionRed() {
+		this.costoPorKm = 10;
+        this.porcentajeRecargo = 20;
+        this.costoFijo = 5;
+	}
 		
 	public void setParametros(double costoPorKm, double porcentajeRecargo, double costoFijo) {
         this.costoPorKm = costoPorKm;
@@ -28,13 +32,14 @@ public class GestionRed {
 	public void crearRedFibraOptica() {
        
         RedFibraOptica red = new RedFibraOptica(localidades);
-        calcularCostos(red);
+        calcularCostosYAgregarAristas(red);
         MST<Localidad> mst = new MST<>(red);
         resultado = mst.kruskal();
         costoTotal = mst.getPesoTotal();
     }
+	
 //	hay que implementar los parametros para que funcione	
-	private void calcularCostos(RedFibraOptica red) {
+	private void calcularCostosYAgregarAristas(RedFibraOptica red) {
         for (int i = 0; i < localidades.size(); i++) {
             for (int j = i + 1; j < localidades.size(); j++) {
                 Localidad origen  = localidades.get(i);

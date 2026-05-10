@@ -2,7 +2,6 @@ package models.grafo;
 
 public class Arista {
 	
-
 			private int origen;
 			private int destino;
 			private double peso;
@@ -37,6 +36,4 @@ public class Arista {
 			this.peso = peso;
 		}
 		
-		
-
 }

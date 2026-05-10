@@ -7,16 +7,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import models.grafo.Arista;
+
 public class MST<T> {
+	
 	private Grafo<T> g;
 	private int[] A;
 	private double pesoTotal;
+	
 	public MST(Grafo<T> g) {
 		this.pesoTotal = 0;
 		this.g = g;
-		System.out.println(g);
-		this.A = makeSet(g.getVertices().size());
-		
+		//System.out.println(g);
+		this.A = makeSet(g.getVertices().size());	
 	}
 	
 	public Grafo<T> kruskal() {
@@ -56,7 +58,7 @@ public class MST<T> {
 	}
 	// inicializamos cada componentes - 
 	private int[] makeSet(int cantVertices) {
-		System.out.println("hello");
+		//System.out.println("hello");
 		int[] verticesPadre = new int[cantVertices];
 		for(int i = 0; i < cantVertices; i++ ) {
 			verticesPadre[i] = i;
@@ -64,7 +66,6 @@ public class MST<T> {
 		return verticesPadre;
 	}
 	// se crea un diccionario con <Arista, double> con peso de menor a mayor
-
 	private List<Arista> ordenarAristas(List<Arista> list) {
 		return list.stream()	
 				.sorted(Comparator.comparingDouble(Arista::getPeso))

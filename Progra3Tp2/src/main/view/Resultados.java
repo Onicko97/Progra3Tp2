@@ -72,11 +72,11 @@ public class Resultados extends JPanel implements IResultados {
         //aristas
         modeloTabla.setRowCount(0);
         for (Arista arista : resultado.getAristas()) {
-            Localidad origen  = localidades.get(arista.getOrigen());
+        	
+            Localidad origen = localidades.get(arista.getOrigen());
             Localidad destino = localidades.get(arista.getDestino());
-
             
-            Coordinate cOrigen  = new Coordinate(origen.getLatitud(),  origen.getLongitud());
+            Coordinate cOrigen  = new Coordinate(origen.getLatitud(), origen.getLongitud());
             Coordinate cDestino = new Coordinate(destino.getLatitud(), destino.getLongitud());
             MapPolygonImpl linea = new MapPolygonImpl(cOrigen, cDestino, cDestino);
             linea.getStyle().setColor(Color.RED);
