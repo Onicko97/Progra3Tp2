@@ -30,10 +30,9 @@ public class VentanaPrincipal extends JFrame  {
 	public VentanaPrincipal() {
 		
 		modelo = new GestionRed();
-		
 		pantallaResultados = new Resultados();
-		
 		presenter = new RedFibraOpticaPresenter(pantallaLocalidades,pantallaResultados, modelo, this);
+		pantallaResultados.setPresenter(presenter);
         pantallaLocalidades.setPresenter(presenter);
         
         

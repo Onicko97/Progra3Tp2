@@ -38,7 +38,7 @@ public class GestionRed {
         costoTotal = mst.getPesoTotal();
     }
 	
-//	hay que implementar los parametros para que funcione	
+//	hay que implementar los parametros para que funcione
 	private void calcularCostosYAgregarAristas(RedFibraOptica red) {
         for (int i = 0; i < localidades.size(); i++) {
             for (int j = i + 1; j < localidades.size(); j++) {
@@ -84,7 +84,7 @@ public class GestionRed {
         return costo;
     }
 
-    private double calcularDistanciaKm(Localidad a, Localidad b) {
+    public double calcularDistanciaKm(Localidad a, Localidad b) {
         //haversine 
         final int R = 6371;
         double lat1 = Math.toRadians(a.getLatitud());

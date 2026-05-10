@@ -56,6 +56,10 @@ public class RedFibraOpticaPresenter {
         modelo.getCostoTotal()
     );
     ventana.mostrarResultado();
-}
+   }
+   
+   public double getDistancia(Localidad origen, Localidad destino) {
+	   return modelo.calcularDistanciaKm(origen, destino);
+   }
 
 }

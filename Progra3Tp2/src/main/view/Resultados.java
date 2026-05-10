@@ -21,12 +21,14 @@ import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import models.domain.Localidad;
 import models.grafo.Arista;
 import models.grafo.Grafo;
+import presenter.RedFibraOpticaPresenter;
 
 public class Resultados extends JPanel implements IResultados {
 
     private JMapViewer mapa;
     private DefaultTableModel modeloTabla;
     private JLabel lblCostoTotal;
+    private RedFibraOpticaPresenter presenter;
 
     public Resultados() {
         setLayout(new BorderLayout(0, 10));
@@ -34,6 +36,7 @@ public class Resultados extends JPanel implements IResultados {
         mapa = new JMapViewer();
         add(mapa, BorderLayout.CENTER);
         add(crearPanelSur(), BorderLayout.SOUTH);
+
     }
 
     private JPanel crearPanelSur() {
@@ -86,7 +89,7 @@ public class Resultados extends JPanel implements IResultados {
             modeloTabla.addRow(new Object[]{
                 origen.getNombre(),
                 destino.getNombre(),
-                
+                presenter.getDistancia(origen, destino),
                 String.format("$ %.0f", arista.getPeso())
             });
         }
@@ -100,6 +103,10 @@ public class Resultados extends JPanel implements IResultados {
             new Coordinate(localidades.get(0).getLatitud(), localidades.get(0).getLongitud()), 6);
     }
     
+    }
+    
+    public void setPresenter(RedFibraOpticaPresenter presenter) {
+    	this.presenter = presenter;
     }
     
 }
