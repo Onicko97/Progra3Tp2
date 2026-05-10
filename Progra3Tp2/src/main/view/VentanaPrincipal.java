@@ -25,16 +25,22 @@ public class VentanaPrincipal extends JFrame  {
 	Localidades pantallaLocalidades = new Localidades();
 	RedFibraOpticaPresenter presenter;
 	private CardLayout cardLayout = new CardLayout();
+	private Resultados pantallaResultados;
 	
 	public VentanaPrincipal() {
 		
 		modelo = new GestionRed();
-		presenter = new RedFibraOpticaPresenter(pantallaLocalidades, modelo, this);
+		
+		pantallaResultados = new Resultados();
+		
+		presenter = new RedFibraOpticaPresenter(pantallaLocalidades,pantallaResultados, modelo, this);
         pantallaLocalidades.setPresenter(presenter);
+        
         
         getContentPane().setLayout(cardLayout);
         getContentPane().add(pantallaLocalidades, "localidades");
         getContentPane().add(mapa, "mapa");
+        getContentPane().add(pantallaResultados, "resultados");
         
         cardLayout.show(getContentPane(), "localidades");
         
@@ -54,11 +60,15 @@ public class VentanaPrincipal extends JFrame  {
     public void mostrarLocalidades() {
         cardLayout.show(getContentPane(), "localidades");
     }
+    
+    public void mostrarResultado() {
+        cardLayout.show(getContentPane(), "resultados");
+    }
 
     public void mostrar() {
         EventQueue.invokeLater(() -> setVisible(true));
     }
-	
+    
 	public void agregarVerticeAlMapa(String nombre, Coordinate coordenada) { //Coordenadas de San Miguel: (-34.546, -58.719)
 		MapMarkerDot vertice = new MapMarkerDot(nombre, coordenada);
 		vertice.getStyle().setBackColor(Color.BLUE);

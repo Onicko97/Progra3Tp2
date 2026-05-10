@@ -5,11 +5,14 @@ import view.*;
 public class RedFibraOpticaPresenter {
 
     private final ILocalidades vistaLocalidades;
+    private final IResultados vistaResultados; 
     private final GestionRed modelo;
     private final VentanaPrincipal ventana;
     
-    public RedFibraOpticaPresenter(ILocalidades vistaLocalidades, GestionRed modelo,VentanaPrincipal ventana) {
+    
+    public RedFibraOpticaPresenter(ILocalidades vistaLocalidades,IResultados vistaResultados, GestionRed modelo,VentanaPrincipal ventana) {
         this.vistaLocalidades = vistaLocalidades;
+        this.vistaResultados= vistaResultados;
         this.modelo = modelo;
         this.ventana = ventana;
     }
@@ -41,12 +44,18 @@ public class RedFibraOpticaPresenter {
     }
     
  
-//    public void planificar() {
-//        if (modelo.getLocalidades().size() < 2) {
-//            vistaLocalidades.mostrarError("al menos 2 localidades para crear una red");
-//            return;
-//        }
-//        modelo.planificar();
-//        ventana.mostrarResultado();
-//    }
+   public void planificar() {
+    if (modelo.getLocalidades().size() < 2) {
+        vistaLocalidades.mostrarError("Necesitás al menos 2 localidades.");
+        return;
+    }
+      modelo.crearRedFibraOptica();
+    vistaResultados.mostrarResultado(
+        modelo.getResultado(),
+        modelo.getLocalidades(),
+        modelo.getCostoTotal()
+    );
+    ventana.mostrarResultado();
+}
+
 }
