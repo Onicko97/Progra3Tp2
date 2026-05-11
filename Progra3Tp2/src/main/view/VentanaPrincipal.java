@@ -26,22 +26,26 @@ public class VentanaPrincipal extends JFrame  {
 	RedFibraOpticaPresenter presenter;
 	private CardLayout cardLayout = new CardLayout();
 	private Resultados pantallaResultados;
+	private Parametros parametros;
 	
 	public VentanaPrincipal() {
 		
 		modelo = new GestionRed();
 		pantallaResultados = new Resultados();
+		parametros = new Parametros();
 		presenter = new RedFibraOpticaPresenter(pantallaLocalidades,pantallaResultados, modelo, this);
 		pantallaResultados.setPresenter(presenter);
         pantallaLocalidades.setPresenter(presenter);
+        parametros.setPresenter(presenter);
         
         
         getContentPane().setLayout(cardLayout);
         getContentPane().add(pantallaLocalidades, "localidades");
         getContentPane().add(mapa, "mapa");
         getContentPane().add(pantallaResultados, "resultados");
+        getContentPane().add(parametros, "parametros");
         
-        cardLayout.show(getContentPane(), "localidades");
+        cardLayout.show(getContentPane(), "pantallaLocalidades");
         
         propiedadesPorDefecto();
        
@@ -62,6 +66,10 @@ public class VentanaPrincipal extends JFrame  {
     
     public void mostrarResultado() {
         cardLayout.show(getContentPane(), "resultados");
+    }
+    
+    public void mostrarConfiguracionRed() {
+    	 cardLayout.show(getContentPane(), "parametros");
     }
 
     public void mostrar() {

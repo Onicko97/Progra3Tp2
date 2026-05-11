@@ -3,6 +3,9 @@ package view;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import presenter.RedFibraOpticaPresenter;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -19,10 +22,9 @@ public class Parametros extends JPanel {
 	private JTextField textCostoKM;
 	private JTextField textRecargo;
 	private JTextField textCostoFijo;
+	private RedFibraOpticaPresenter presenter;
 
-	/**
-	 * Create the panel.
-	 */
+	
 	public Parametros() {
 		setLayout(new BorderLayout(0, 0));
 		
@@ -123,6 +125,15 @@ public class Parametros extends JPanel {
 		gbc_btnNewButton.gridx = 3;
 		gbc_btnNewButton.gridy = 0;
 		panel_2.add(btnNewButton, gbc_btnNewButton);
+		JButton btnNewButtonAtras = new JButton("Volver atras");
+		GridBagConstraints gbc_btnNewButtonAtras = new GridBagConstraints();
+		btnNewButtonAtras.addActionListener(e -> presenter.volverAtras());
+		gbc_btnNewButtonAtras.gridx = 7;
+		gbc_btnNewButtonAtras.gridy = 0;
+		panel_2.add(btnNewButtonAtras, gbc_btnNewButtonAtras);
 
 	}
+	 public void setPresenter(RedFibraOpticaPresenter presenter) {
+	    	this.presenter = presenter;
+	    }
 }

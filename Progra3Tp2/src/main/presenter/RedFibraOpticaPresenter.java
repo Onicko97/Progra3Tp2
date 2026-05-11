@@ -43,7 +43,14 @@ public class RedFibraOpticaPresenter {
         vistaLocalidades.limpiarFormulario();
     }
     
+ public void configuracionRed() {
+	 ventana.mostrarConfiguracionRed(); 
+ }
  
+ public void volverAtras() {
+	 ventana.mostrarLocalidades();
+ }
+    
    public void planificar() {
     if (modelo.getLocalidades().size() < 2) {
         vistaLocalidades.mostrarError("Necesitás al menos 2 localidades.");

@@ -201,6 +201,14 @@ public class Localidades extends JPanel implements ILocalidades {
 		JPanel boton = new JPanel(new FlowLayout(FlowLayout.CENTER)); // o RIGHT
 		add(boton, BorderLayout.SOUTH);
 		
+		JButton btnConfigurarRed = new JButton("Configurar Red");
+		btnConfigurarRed.setPreferredSize(new Dimension(169, 23));
+		btnConfigurarRed.addActionListener(e -> presenter.configuracionRed());
+		GridBagConstraints gbc_btnConfigurarRed = new GridBagConstraints();
+		gbc_btnConfigurarRed.gridx = 20;
+		gbc_btnConfigurarRed.gridy = 0;
+		boton.add(btnConfigurarRed, gbc_btnConfigurarRed);
+		
 		JButton btnCrearRed = new JButton("CREAR RED");
 		btnCrearRed.setPreferredSize(new Dimension(169, 23));
 		btnCrearRed.addActionListener(e -> presenter.planificar());

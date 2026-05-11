@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import logic.MST;
 import models.domain.Localidad;
 import models.grafo.Arista;
+import models.grafo.BFS;
 import models.grafo.Grafo;
 
 class MSTTest {
@@ -36,8 +37,6 @@ class MSTTest {
 	@Test
 	void verificarPesoTotal() {
 		double pesoEsperado = 19;
-		
-		
 		MST<Localidad> arbol = new MST<Localidad>(grafo);
 		arbol.kruskal();
 		assertEquals(pesoEsperado, arbol.getPesoTotal());
@@ -46,6 +45,17 @@ class MSTTest {
 	// El numero de aristas en un AGM debe ser igual al numero de vertices - 1
 	@Test
 	void verificarAristasVertices() {
-		assertEquals(1,1);
+		MST<Localidad> arbol = new MST<Localidad>(grafo);
+		Grafo<Localidad> grafoTest = arbol.kruskal();
+		int cantAristas = grafoTest.getAristas().size();
+		int cantVertices = grafoTest.getVertices().size();
+		assertEquals(cantAristas, cantVertices - 1);
 	}
+	@Test
+	void verificarConectividadArbol() {
+		MST<Localidad> arbol = new MST<Localidad>(grafo);
+		Grafo<Localidad> grafoTest = arbol.kruskal();
+		assertEquals(BFS.esConexo(grafoTest), true);
+	}
+	
 }
