@@ -16,7 +16,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 
-public class Parametros extends JPanel {
+public class Parametros extends JPanel implements IParametros {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textCostoKM;
@@ -124,7 +124,10 @@ public class Parametros extends JPanel {
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.gridx = 3;
 		gbc_btnNewButton.gridy = 0;
+		btnNewButton.addActionListener(e -> presenter.guardarParametros());
 		panel_2.add(btnNewButton, gbc_btnNewButton);
+		
+		
 		JButton btnNewButtonAtras = new JButton("Volver atras");
 		GridBagConstraints gbc_btnNewButtonAtras = new GridBagConstraints();
 		btnNewButtonAtras.addActionListener(e -> presenter.volverAtras());
@@ -136,4 +139,27 @@ public class Parametros extends JPanel {
 	 public void setPresenter(RedFibraOpticaPresenter presenter) {
 	    	this.presenter = presenter;
 	    }
+	 @Override
+	 public String getCostoPorKm() {
+	     return textCostoKM.getText();
+	 }
+
+	 @Override
+	 public String getPorcentajeRecargo() {
+	     return textRecargo.getText();
+	 }
+
+	 @Override
+	 public String getCostoFijo() {
+	     return textCostoFijo.getText();
+	 }
+	 @Override
+	 public void mostrarError(String mensaje) {
+	     javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+	 }
+
+	 @Override
+	 public void mostrarExito(String mensaje) {
+	     javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+	 }
 }

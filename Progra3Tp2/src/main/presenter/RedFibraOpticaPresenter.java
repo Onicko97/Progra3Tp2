@@ -8,9 +8,12 @@ public class RedFibraOpticaPresenter {
     private final IResultados vistaResultados; 
     private final GestionRed modelo;
     private final VentanaPrincipal ventana;
+    private final IParametros vistaParametros;
     
-    
-    public RedFibraOpticaPresenter(ILocalidades vistaLocalidades,IResultados vistaResultados, GestionRed modelo,VentanaPrincipal ventana) {
+    public RedFibraOpticaPresenter(ILocalidades vistaLocalidades,
+    		IResultados vistaResultados, IParametros vistaParametros, 
+    		GestionRed modelo,VentanaPrincipal ventana) {
+    	this.vistaParametros= vistaParametros;
         this.vistaLocalidades = vistaLocalidades;
         this.vistaResultados= vistaResultados;
         this.modelo = modelo;
@@ -23,7 +26,7 @@ public class RedFibraOpticaPresenter {
         String lat = vistaLocalidades.getLatitud();
         String lon = vistaLocalidades.getLongitud();
 
-        // valida los parametros
+        // valida
         if (nombre.isEmpty() || provincia.isEmpty() || lat.isEmpty() || lon.isEmpty()) {
             vistaLocalidades.mostrarError("completá todos los campos");
             return;
@@ -68,5 +71,21 @@ public class RedFibraOpticaPresenter {
    public double getDistancia(Localidad origen, Localidad destino) {
 	   return modelo.calcularDistanciaKm(origen, destino);
    }
+
+   public void guardarParametros() {
+	    
+		try {
+	        
+	        double km = Double.parseDouble(vistaParametros.getCostoPorKm());
+	        double recargo = Double.parseDouble(vistaParametros.getPorcentajeRecargo());
+	        double fijo = Double.parseDouble(vistaParametros.getCostoFijo());
+
+	        modelo.setParametros(km, recargo, fijo);
+	        vistaParametros.mostrarExito("Parámetros actualizados correctamente");
+	        ventana.mostrarLocalidades();
+	    } catch (NumberFormatException e) {
+	        vistaParametros.mostrarError("Por favor, ingresá valores numéricos válidos");
+	    }
+	}
 
 }

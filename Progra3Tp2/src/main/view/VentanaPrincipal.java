@@ -26,24 +26,24 @@ public class VentanaPrincipal extends JFrame  {
 	RedFibraOpticaPresenter presenter;
 	private CardLayout cardLayout = new CardLayout();
 	private Resultados pantallaResultados;
-	private Parametros parametros;
+	private Parametros pantallaParametros;
 	
 	public VentanaPrincipal() {
 		
 		modelo = new GestionRed();
 		pantallaResultados = new Resultados();
-		parametros = new Parametros();
-		presenter = new RedFibraOpticaPresenter(pantallaLocalidades,pantallaResultados, modelo, this);
+		pantallaParametros = new Parametros();
+		presenter = new RedFibraOpticaPresenter(pantallaLocalidades,pantallaResultados, pantallaParametros, modelo, this);
+		
 		pantallaResultados.setPresenter(presenter);
         pantallaLocalidades.setPresenter(presenter);
-        parametros.setPresenter(presenter);
+        pantallaParametros.setPresenter(presenter);
         
         
         getContentPane().setLayout(cardLayout);
         getContentPane().add(pantallaLocalidades, "localidades");
-        getContentPane().add(mapa, "mapa");
         getContentPane().add(pantallaResultados, "resultados");
-        getContentPane().add(parametros, "parametros");
+        getContentPane().add(pantallaParametros, "parametros");
         
         cardLayout.show(getContentPane(), "pantallaLocalidades");
         
@@ -55,10 +55,6 @@ public class VentanaPrincipal extends JFrame  {
 		this.setBounds(100, 100, 800, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
-	public void mostrarMapa() {
-        cardLayout.show(getContentPane(), "mapa");
-    }
     
     public void mostrarLocalidades() {
         cardLayout.show(getContentPane(), "localidades");
@@ -75,29 +71,4 @@ public class VentanaPrincipal extends JFrame  {
     public void mostrar() {
         EventQueue.invokeLater(() -> setVisible(true));
     }
-    
-	public void agregarVerticeAlMapa(String nombre, Coordinate coordenada) { //Coordenadas de San Miguel: (-34.546, -58.719)
-		MapMarkerDot vertice = new MapMarkerDot(nombre, coordenada);
-		vertice.getStyle().setBackColor(Color.BLUE);
-		mapa.addMapMarker(vertice);
-	}
-	
-	public void agregarArista (MapPolygon poligono) {
-		poligono.getStyle().setColor(Color.RED);
-		mapa.addMapPolygon(poligono);
-		//no es ideal, MapPolygon necesita 3 coordenadas y traza un poligono, para que trace una linea hay que repetir una coordenada
-	}
-	
-	public void probarVerticesAristas() {//para probar, despues hay que borrarlo
-		Coordinate coor1 = new Coordinate(-34.546, -58.719); //Coordenadas de San Miguel: (-34.546, -58.719)
-		Coordinate coor2 = new Coordinate(-34.546, -58.739);
-		Coordinate coor3 = new Coordinate(-34.546, -58.739);
-		
-		MapPolygonImpl poligon = new MapPolygonImpl(coor1, coor2, coor3);
-		agregarVerticeAlMapa("1", coor1);
-		agregarVerticeAlMapa("2", coor2);
-		agregarArista(poligon);
-	}
-	
-	
 }
