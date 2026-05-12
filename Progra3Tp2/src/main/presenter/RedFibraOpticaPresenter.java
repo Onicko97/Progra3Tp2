@@ -1,4 +1,6 @@
 package presenter;
+import java.util.List;
+
 import models.domain.*;
 import view.*;
 
@@ -66,17 +68,16 @@ public class RedFibraOpticaPresenter {
 	        vistaLocalidades.mostrarError("Necesitás al menos 2 localidades.");
 	        return;
 	    }
-	    
 	    modelo.crearRedFibraOptica();
 	    
-	   
+	    List<Tramo> listaDeTramos = modelo.obtenerTramosDelResultado();
 	    vistaResultados.mostrarResultado(
-	        modelo.getResultado(),
-	        modelo.getLocalidades(),
-	        modelo.getCostoTotal(),
-	        modelo.getCostoPorKm(),
-	        modelo.getPorcentajeRecargo(),
-	        modelo.getCostoFijo()
+	    		listaDeTramos,                
+	            modelo.getLocalidades(),      
+	            modelo.getCostoTotal(),      
+	            modelo.getCostoPorKm(),       
+	            modelo.getPorcentajeRecargo(),
+	            modelo.getCostoFijo()
 	    );
 	    ventana.mostrarResultado();
 	}

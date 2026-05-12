@@ -134,11 +134,6 @@ public class Localidades extends JPanel implements ILocalidades {
 		formulario.add(textLongitud, gbc_textLongitud);
 		textLongitud.setColumns(10);
 		
-		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.setPreferredSize(new Dimension(121, 23));
@@ -153,12 +148,6 @@ public class Localidades extends JPanel implements ILocalidades {
 		gbc_btnAgregar.gridx = 4;
 		gbc_btnAgregar.gridy = 5;
 		formulario.add(btnAgregar, gbc_btnAgregar);
-		GridBagConstraints gbc_btnEliminar = new GridBagConstraints();
-		gbc_btnEliminar.fill = GridBagConstraints.BOTH;
-		gbc_btnEliminar.insets = new Insets(0, 0, 5, 5);
-		gbc_btnEliminar.gridx = 7;
-		gbc_btnEliminar.gridy = 5;
-		formulario.add(btnEliminar, gbc_btnEliminar);
 		
 		JScrollPane tabla = new JScrollPane();
 		add(tabla, BorderLayout.CENTER);

@@ -3,6 +3,7 @@ package models.domain;
 
 import java.util.*;
 import logic.MST;
+import models.grafo.Arista;
 import models.grafo.Grafo;
 
 public class GestionRed {
@@ -40,7 +41,6 @@ public class GestionRed {
 
 	public double obtenerCostoEntre(Localidad origen, Localidad destino) {
 	    double distancia = calcularDistanciaKm(origen, destino);
-	    
 	    //setParametros pone lo que el usuario ingrese
 	    double costoBase = distancia * this.costoPorKm;
 	    double recargoPorDistancia = 0;
@@ -105,6 +105,21 @@ public class GestionRed {
 	public double getCostoFijo() {
 		
 		return costoFijo;
+	}
+	
+	public List<Tramo> obtenerTramosDelResultado() {
+	    List<Tramo> tramos = new ArrayList<>();
+	    if (resultado == null) return tramos;
+
+	    for (Arista arista : resultado.getAristas()) {
+	        Localidad origen = localidades.get(arista.getOrigen());
+	        Localidad destino = localidades.get(arista.getDestino());
+	        double costo = arista.getPeso();
+	        double kms = calcularDistanciaKm(origen, destino);
+	        
+	        tramos.add(new Tramo(origen, destino, kms, costo));
+	    }
+	    return tramos;
 	}
     
 }

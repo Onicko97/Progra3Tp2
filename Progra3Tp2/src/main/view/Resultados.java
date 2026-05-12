@@ -19,6 +19,7 @@ import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 
 import models.domain.Localidad;
+import models.domain.Tramo;
 import models.grafo.Arista;
 import models.grafo.Grafo;
 import presenter.RedFibraOpticaPresenter;
@@ -75,21 +76,21 @@ public class Resultados extends JPanel implements IResultados {
         return panel;
     }
     
-
     @Override
-	public void mostrarResultado(Grafo<Localidad> resultado, List<Localidad> localidades, 
-	            double costoTotal, double costoKm, double recargo, double costoFijo) {
-	
-	limpiarPantalla();
-	
-	dibujarMarcadores(localidades);
-	dibujarRed(resultado, localidades);
-	
-	actualizarResumen(costoTotal, costoKm, recargo, costoFijo);
-	
-	ajustarVistaMapa(localidades);
-	}
-
+    public void mostrarResultado(List<Tramo> tramos, List<Localidad> todas, 
+            double total, double km, double rec, double fijo) {
+    	
+        limpiarPantalla();
+        
+        dibujarMarcadores(todas);
+        
+        dibujarRed(tramos);
+        
+        actualizarResumen(total, km, rec, fijo);
+        
+        ajustarVistaMapa(todas);
+    }
+    
 	private void limpiarPantalla() {
 		mapa.removeAllMapMarkers();
         mapa.removeAllMapPolygons();
@@ -103,14 +104,14 @@ public class Resultados extends JPanel implements IResultados {
 	        mapa.addMapMarker(marcador);
 	    }
 	}
-	private void dibujarRed(Grafo<Localidad> resultado, List<Localidad> localidades) {
-	    for (Arista arista : resultado.getAristas()) {
-	        Localidad origen = localidades.get(arista.getOrigen());
-	        Localidad destino = localidades.get(arista.getDestino());
+	private void dibujarRed(List<Tramo> tramos) {
+	    for (Tramo tramo : tramos) {
+	    	
+	        Localidad origen = tramo.getOrigen();
+	        Localidad destino = tramo.getDestino();
 	        
 	        agregarLineaMapa(origen, destino);
-	        
-	        agregarFilaTabla(origen, destino, arista.getPeso());
+	        agregarFilaTabla(origen, destino, tramo.getCosto()); 
 	    }
 	}
 
