@@ -1,19 +1,32 @@
 package models.domain;
 
+
+
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 public class Localidad {
 	
-	private Coordinate coordenadas;
 	private String nombre;
 	private String provincia;
+	private double latitud;
+	private double longitud;
 	
+	
+	public Localidad() {}
 	public Localidad(String nombre, String provincia, double latitud, double longitud) {
 		this.nombre = nombre;
 		this.provincia = provincia;
-		this.coordenadas = new Coordinate(latitud, longitud);
+		this.latitud = latitud;
+		this.longitud = longitud;
+		
+		
 	}
 
+	public Coordinate toCoordinate() {
+        return new Coordinate(this.latitud, this.longitud);
+    }
+	
+	
     public String getNombre() {
         return nombre;
     }
@@ -23,10 +36,12 @@ public class Localidad {
     }
 
     public double getLatitud() {
-        return coordenadas.getLat();
+    	Coordinate coordenadas = this.toCoordinate();
+    	return coordenadas.getLat();
     }
 
     public double getLongitud() {
-        return coordenadas.getLon();
+    	Coordinate coordenadas = this.toCoordinate();
+    	return coordenadas.getLat();
     }
 }

@@ -23,12 +23,24 @@ public class RedFibraOpticaPresenter {
         this.vistaLocalidades.setPresenter(this);
         this.vistaResultados.setPresenter(this);
         this.vistaParametros.setPresenter(this);
+        
+        this.cargarLocalidadesGuardadas();
     }
     
     public void iniciar() {
     	ventana.mostrar();
     }
 
+    public void cargarLocalidadesGuardadas() {
+    	modelo.cargarLocalidadesGuardadasJSON();
+    	List<Localidad> localidades = modelo.getLocalidades();
+    	System.out.println(localidades.size());
+    	if(localidades.size() > 0) {
+    		
+    		vistaLocalidades.actualizarTabla(localidades);
+    	}
+    }
+    
     public void agregarLocalidad() {
         String nombre = vistaLocalidades.getNombre();
         String provincia = vistaLocalidades.getProvincia();
@@ -51,6 +63,7 @@ public class RedFibraOpticaPresenter {
         }
 
         modelo.agregarLocalidad(new Localidad(nombre, provincia, latitud, longitud));
+        modelo.guardarLocalidadJSON(modelo.getLocalidades());
         vistaLocalidades.actualizarTabla(modelo.getLocalidades());
         vistaLocalidades.limpiarFormulario();
     }

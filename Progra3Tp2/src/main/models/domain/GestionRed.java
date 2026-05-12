@@ -14,11 +14,13 @@ public class GestionRed {
     private double porcentajeRecargo;
     private double costoFijo;
     private double costoTotal;
+    private ServicioJson sj;
     
 	public GestionRed() {
 		this.costoPorKm = 0;
         this.porcentajeRecargo = 0;
         this.costoFijo = 0;
+        this.sj = new ServicioJson();
 	}
 		
 	public void setParametros(double costoPorKm, double porcentajeRecargo, double costoFijo) {
@@ -26,6 +28,10 @@ public class GestionRed {
         this.porcentajeRecargo = porcentajeRecargo;
         this.costoFijo = costoFijo;
     }
+	
+	public void guardarLocalidadJSON(List<Localidad> localidadesGuardadas) {
+		sj.guardarLocalidades(localidadesGuardadas);
+	}
 	
 	public void crearRedFibraOptica() {
 	    RedFibraOptica red = new RedFibraOptica(localidades);
@@ -74,6 +80,15 @@ public class GestionRed {
     
     public Grafo<Localidad> getResultado() {
         return resultado;
+    }
+    
+    public void cargarLocalidadesGuardadasJSON() {
+    	List<Localidad> locs = sj.cargarLocalidad();
+    	if(locs != null && locs.size() > 0 ) {
+    		for(Localidad loc: locs) {
+    			localidades.add(loc);
+    		}
+    	}
     }
   
     public double calcularDistanciaKm(Localidad a, Localidad b) {
