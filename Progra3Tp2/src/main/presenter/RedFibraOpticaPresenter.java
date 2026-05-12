@@ -13,6 +13,7 @@ public class RedFibraOpticaPresenter {
     public RedFibraOpticaPresenter(ILocalidades vistaLocalidades,
     		IResultados vistaResultados, IParametros vistaParametros, 
     		GestionRed modelo,VentanaPrincipal ventana) {
+    	
     	this.vistaParametros= vistaParametros;
         this.vistaLocalidades = vistaLocalidades;
         this.vistaResultados= vistaResultados;
@@ -55,18 +56,24 @@ public class RedFibraOpticaPresenter {
  }
     
    public void planificar() {
-    if (modelo.getLocalidades().size() < 2) {
-        vistaLocalidades.mostrarError("Necesitás al menos 2 localidades.");
-        return;
-    }
-      modelo.crearRedFibraOptica();
-    vistaResultados.mostrarResultado(
-        modelo.getResultado(),
-        modelo.getLocalidades(),
-        modelo.getCostoTotal()
-    );
-    ventana.mostrarResultado();
-   }
+	   if (modelo.getLocalidades().size() < 2) {
+	        vistaLocalidades.mostrarError("Necesitás al menos 2 localidades.");
+	        return;
+	    }
+	    
+	    modelo.crearRedFibraOptica();
+	    
+	   
+	    vistaResultados.mostrarResultado(
+	        modelo.getResultado(),
+	        modelo.getLocalidades(),
+	        modelo.getCostoTotal(),
+	        modelo.getCostoPorKm(),
+	        modelo.getPorcentajeRecargo(),
+	        modelo.getCostoFijo()
+	    );
+	    ventana.mostrarResultado();
+	}
    
    public double getDistancia(Localidad origen, Localidad destino) {
 	   return modelo.calcularDistanciaKm(origen, destino);
@@ -82,7 +89,7 @@ public class RedFibraOpticaPresenter {
 
 	        modelo.setParametros(km, recargo, fijo);
 	        vistaParametros.mostrarExito("Parámetros actualizados correctamente");
-	        ventana.mostrarLocalidades();
+	       
 	    } catch (NumberFormatException e) {
 	        vistaParametros.mostrarError("Por favor, ingresá valores numéricos válidos");
 	    }

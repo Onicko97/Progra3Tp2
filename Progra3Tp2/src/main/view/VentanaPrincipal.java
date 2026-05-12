@@ -20,36 +20,46 @@ import javax.swing.JPanel;
 
 public class VentanaPrincipal extends JFrame  {
 	
-	private JMapViewer mapa = new JMapViewer();
-	private GestionRed modelo;
-	Localidades pantallaLocalidades = new Localidades();
-	RedFibraOpticaPresenter presenter;
-	private CardLayout cardLayout = new CardLayout();
-	private Resultados pantallaResultados;
-	private Parametros pantallaParametros;
+	private final GestionRed modelo;
+    private final RedFibraOpticaPresenter presenter;
+    
+	private final Localidades pantallaLocalidades;
+	private final Resultados pantallaResultados;
+	private final Parametros pantallaParametros;
+	private final CardLayout cardLayout = new CardLayout();
+	
 	
 	public VentanaPrincipal() {
-		
-		modelo = new GestionRed();
-		pantallaResultados = new Resultados();
-		pantallaParametros = new Parametros();
-		presenter = new RedFibraOpticaPresenter(pantallaLocalidades,pantallaResultados, pantallaParametros, modelo, this);
-		
-		pantallaResultados.setPresenter(presenter);
-        pantallaLocalidades.setPresenter(presenter);
-        pantallaParametros.setPresenter(presenter);
-        
-        
-        getContentPane().setLayout(cardLayout);
-        getContentPane().add(pantallaLocalidades, "localidades");
-        getContentPane().add(pantallaResultados, "resultados");
-        getContentPane().add(pantallaParametros, "parametros");
-        
-        cardLayout.show(getContentPane(), "pantallaLocalidades");
-        
-        propiedadesPorDefecto();
-       
-    }
+	    //inicializa el modelo
+	    modelo = new GestionRed();
+	    
+	    //inicializa las vistas
+	    pantallaLocalidades = new Localidades();
+	    pantallaResultados = new Resultados();
+	    pantallaParametros = new Parametros();
+	    
+	    //inicializa el presenter 
+	    presenter = new RedFibraOpticaPresenter(pantallaLocalidades, pantallaResultados, pantallaParametros, modelo, this);
+	    
+	    //para desacoplar sirve
+	    pantallaResultados.setPresenter(presenter);
+	    pantallaLocalidades.setPresenter(presenter);
+	    pantallaParametros.setPresenter(presenter);
+	    
+	    
+	    configurarLayout();
+	    
+	    //asi arranca 
+	    propiedadesPorDefecto();
+	    mostrarLocalidades(); 
+	}
+
+	private void configurarLayout() {
+		getContentPane().setLayout(cardLayout);
+	    getContentPane().add(pantallaLocalidades, "localidades");
+	    getContentPane().add(pantallaResultados, "resultados");
+	    getContentPane().add(pantallaParametros, "parametros");
+	}
 	
 	private void propiedadesPorDefecto() {
 		this.setBounds(100, 100, 800, 600);

@@ -28,12 +28,15 @@ public class Resultados extends JPanel implements IResultados {
     private JMapViewer mapa;
     private DefaultTableModel modeloTabla;
     private JLabel lblCostoTotal;
+    private JLabel lblResumenParametros;
     private RedFibraOpticaPresenter presenter;
 
     public Resultados() {
         setLayout(new BorderLayout(0, 10));
 
         mapa = new JMapViewer();
+        mapa.setZoomContolsVisible(false);
+        mapa.setDisplayToFitMapMarkers();
         add(mapa, BorderLayout.CENTER);
         add(crearPanelSur(), BorderLayout.SOUTH);
 
@@ -41,8 +44,9 @@ public class Resultados extends JPanel implements IResultados {
 
     private JPanel crearPanelSur() {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setPreferredSize(new Dimension(0, 200));
+        panel.setPreferredSize(new Dimension(0, 220)); // Aumentamos un poco el alto
 
+        
         modeloTabla = new DefaultTableModel(
             new String[]{"Origen", "Destino", "Distancia (km)", "Costo ($)"}, 0) {
             @Override
@@ -51,60 +55,94 @@ public class Resultados extends JPanel implements IResultados {
         JTable tabla = new JTable(modeloTabla);
         panel.add(new JScrollPane(tabla), BorderLayout.CENTER);
 
+       //esto es para que se puedan ver los parametros que ingresaron
+        JPanel panelInfo = new JPanel(new BorderLayout());
+        
+        lblResumenParametros = new JLabel("Parámetros: ");
+        lblResumenParametros.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblResumenParametros.setForeground(Color.DARK_GRAY);
+        lblResumenParametros.setBorder(BorderFactory.createEmptyBorder(5, 10, 0, 10));
+
         lblCostoTotal = new JLabel("Costo total:");
-        lblCostoTotal.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        lblCostoTotal.setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
-        panel.add(lblCostoTotal, BorderLayout.SOUTH);
+        lblCostoTotal.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblCostoTotal.setBorder(BorderFactory.createEmptyBorder(5, 10, 8, 10));
+
+        panelInfo.add(lblResumenParametros, BorderLayout.NORTH);
+        panelInfo.add(lblCostoTotal, BorderLayout.SOUTH);
+        
+        panel.add(panelInfo, BorderLayout.SOUTH);
 
         return panel;
     }
+    
 
     @Override
-    public void mostrarResultado(Grafo<Localidad> resultado, List<Localidad> localidades, double costoTotal) {
-        mapa.removeAllMapMarkers();
+	public void mostrarResultado(Grafo<Localidad> resultado, List<Localidad> localidades, 
+	            double costoTotal, double costoKm, double recargo, double costoFijo) {
+	
+	limpiarPantalla();
+	
+	dibujarMarcadores(localidades);
+	dibujarRed(resultado, localidades);
+	
+	actualizarResumen(costoTotal, costoKm, recargo, costoFijo);
+	
+	ajustarVistaMapa(localidades);
+	}
+
+	private void limpiarPantalla() {
+		mapa.removeAllMapMarkers();
         mapa.removeAllMapPolygons();
-
-        //marcadores 
-        for (Localidad l : localidades) {
-            MapMarkerDot marcador = new MapMarkerDot(l.getNombre(), 
-                new Coordinate(l.getLatitud(), l.getLongitud()));
-            marcador.getStyle().setBackColor(Color.BLUE);
-            mapa.addMapMarker(marcador);
-        }
-
-        //aristas
         modeloTabla.setRowCount(0);
-        for (Arista arista : resultado.getAristas()) {
-        	
-            Localidad origen = localidades.get(arista.getOrigen());
-            Localidad destino = localidades.get(arista.getDestino());
-            
-            Coordinate cOrigen  = new Coordinate(origen.getLatitud(), origen.getLongitud());
-            Coordinate cDestino = new Coordinate(destino.getLatitud(), destino.getLongitud());
-            MapPolygonImpl linea = new MapPolygonImpl(cOrigen, cDestino, cDestino);
-            linea.getStyle().setColor(Color.RED);
-            mapa.addMapPolygon(linea);
+	}
+	private void dibujarMarcadores(List<Localidad> localidades) {
+	    for (Localidad l : localidades) {
+	        MapMarkerDot marcador = new MapMarkerDot(l.getNombre(), 
+	            new Coordinate(l.getLatitud(), l.getLongitud()));
+	        marcador.getStyle().setBackColor(Color.BLUE);
+	        mapa.addMapMarker(marcador);
+	    }
+	}
+	private void dibujarRed(Grafo<Localidad> resultado, List<Localidad> localidades) {
+	    for (Arista arista : resultado.getAristas()) {
+	        Localidad origen = localidades.get(arista.getOrigen());
+	        Localidad destino = localidades.get(arista.getDestino());
+	        
+	        agregarLineaMapa(origen, destino);
+	        
+	        agregarFilaTabla(origen, destino, arista.getPeso());
+	    }
+	}
 
-            //fila en la tabla
-            modeloTabla.addRow(new Object[]{
-                origen.getNombre(),
-                destino.getNombre(),
-                presenter.getDistancia(origen, destino),
-                String.format("$ %.0f", arista.getPeso())
-            });
-        }
+	private void agregarLineaMapa(Localidad o, Localidad d) {
+	    Coordinate c1 = new Coordinate(o.getLatitud(), o.getLongitud());
+	    Coordinate c2 = new Coordinate(d.getLatitud(), d.getLongitud());
+	    MapPolygonImpl linea = new MapPolygonImpl(c1, c2, c2);
+	    linea.getStyle().setColor(Color.RED);
+	    mapa.addMapPolygon(linea);
+	}
 
-        lblCostoTotal.setText(String.format("Costo total: $ %.0f", costoTotal));
+	private void agregarFilaTabla(Localidad o, Localidad d, double costo) {
+	    double dist = presenter.getDistancia(o, d);
+	    modeloTabla.addRow(new Object[]{
+	        o.getNombre(),
+	        d.getNombre(),
+	        String.format("%.2f km", dist),
+	        String.format("$ %.2f", costo)
+	    });
+	}
+	private void actualizarResumen(double total, double km, double rec, double fijo) {
+	    lblResumenParametros.setText(String.format(
+	        "Parámetros: $%.2f/km | Recargo: %.0f%% | Fijo: $%.2f", km, rec, fijo));
+	    lblCostoTotal.setText(String.format("Costo total de la red: $ %.2f", total));
+	}
 
-    
-    //esto es para que el mapa se centre en los vertices
-    if (!localidades.isEmpty()) {
-        mapa.setDisplayPosition(
-            new Coordinate(localidades.get(0).getLatitud(), localidades.get(0).getLongitud()), 6);
-    }
-    
-    }
-    
+	private void ajustarVistaMapa(List<Localidad> localidades) {
+	    if (!localidades.isEmpty()) {
+	        mapa.setDisplayToFitMapMarkers();
+	    }
+	}
+	
     public void setPresenter(RedFibraOpticaPresenter presenter) {
     	this.presenter = presenter;
     }

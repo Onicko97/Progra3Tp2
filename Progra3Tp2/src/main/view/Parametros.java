@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 
 import presenter.RedFibraOpticaPresenter;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -26,116 +27,86 @@ public class Parametros extends JPanel implements IParametros {
 
 	
 	public Parametros() {
-		setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(10, 35));
-		add(panel, BorderLayout.NORTH);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
-		
-		JLabel lblNewLabel = new JLabel("CREADOR DE RED DE FIBRA OPTICA");
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 4;
-		gbc_lblNewLabel.gridy = 1;
-		panel.add(lblNewLabel, gbc_lblNewLabel);
-		
-		JPanel panel_1 = new JPanel();
-		add(panel_1, BorderLayout.CENTER);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_1.setLayout(gbl_panel_1);
-		
-		JLabel lblNewLabel_1 = new JLabel("Costo por KM");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.gridwidth = 3;
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 2;
-		gbc_lblNewLabel_1.gridy = 2;
-		panel_1.add(lblNewLabel_1, gbc_lblNewLabel_1);
-		
-		JLabel lblNewLabel_3 = new JLabel("Recargo");
-		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-		gbc_lblNewLabel_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblNewLabel_3.gridwidth = 3;
-		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_3.gridx = 7;
-		gbc_lblNewLabel_3.gridy = 2;
-		panel_1.add(lblNewLabel_3, gbc_lblNewLabel_3);
-		
-		JLabel lblNewLabel_2 = new JLabel("Costo fijo");
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.gridwidth = 3;
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.gridx = 11;
-		gbc_lblNewLabel_2.gridy = 2;
-		panel_1.add(lblNewLabel_2, gbc_lblNewLabel_2);
-		
-		textCostoKM = new JTextField();
-		GridBagConstraints gbc_textCostoKM = new GridBagConstraints();
-		gbc_textCostoKM.gridwidth = 3;
-		gbc_textCostoKM.insets = new Insets(0, 0, 0, 5);
-		gbc_textCostoKM.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textCostoKM.gridx = 2;
-		gbc_textCostoKM.gridy = 3;
-		panel_1.add(textCostoKM, gbc_textCostoKM);
-		textCostoKM.setColumns(10);
-		
-		textRecargo = new JTextField();
-		GridBagConstraints gbc_textRecargo = new GridBagConstraints();
-		gbc_textRecargo.gridwidth = 4;
-		gbc_textRecargo.insets = new Insets(0, 0, 0, 5);
-		gbc_textRecargo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textRecargo.gridx = 6;
-		gbc_textRecargo.gridy = 3;
-		panel_1.add(textRecargo, gbc_textRecargo);
-		textRecargo.setColumns(10);
-		
-		textCostoFijo = new JTextField();
-		GridBagConstraints gbc_textCostoFijo = new GridBagConstraints();
-		gbc_textCostoFijo.gridwidth = 3;
-		gbc_textCostoFijo.insets = new Insets(0, 0, 0, 5);
-		gbc_textCostoFijo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textCostoFijo.gridx = 11;
-		gbc_textCostoFijo.gridy = 3;
-		panel_1.add(textCostoFijo, gbc_textCostoFijo);
-		textCostoFijo.setColumns(10);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setPreferredSize(new Dimension(10, 100));
-		add(panel_2, BorderLayout.SOUTH);
-		GridBagLayout gbl_panel_2 = new GridBagLayout();
-		gbl_panel_2.columnWidths = new int[]{0, 0, 0, 0, 0};
-		gbl_panel_2.rowHeights = new int[]{0, 0};
-		gbl_panel_2.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_2.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-		panel_2.setLayout(gbl_panel_2);
-		
-		JButton btnNewButton = new JButton("Guardar");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.gridx = 3;
-		gbc_btnNewButton.gridy = 0;
-		btnNewButton.addActionListener(e -> presenter.guardarParametros());
-		panel_2.add(btnNewButton, gbc_btnNewButton);
-		
-		
-		JButton btnNewButtonAtras = new JButton("Volver atras");
-		GridBagConstraints gbc_btnNewButtonAtras = new GridBagConstraints();
-		btnNewButtonAtras.addActionListener(e -> presenter.volverAtras());
-		gbc_btnNewButtonAtras.gridx = 7;
-		gbc_btnNewButtonAtras.gridy = 0;
-		panel_2.add(btnNewButtonAtras, gbc_btnNewButtonAtras);
+	    setLayout(new BorderLayout(0, 0));
+	    
+	    // titulo
+	    JPanel panelTitulo = new JPanel();
+	    add(panelTitulo, BorderLayout.NORTH);
+	    JLabel lblTitulo = new JLabel("CONFIGURACIÓN DE PARÁMETROS");
+	    lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 18));
+	    lblTitulo.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+	    panelTitulo.add(lblTitulo);
+	    
+	    // formulario
+	    JPanel panelForm = new JPanel();
+	    add(panelForm, BorderLayout.CENTER);
+	    GridBagLayout gbl_panelForm = new GridBagLayout();
+	    
+	    // Tres columnas con peso 1.0 para que se repartan el ancho equitativamente
+	    gbl_panelForm.columnWeights = new double[]{1.0, 1.0, 1.0};
+	    gbl_panelForm.rowWeights = new double[]{0.0, 0.0}; 
+	    panelForm.setLayout(gbl_panelForm);
+	    
+	    //para dar aire entre componentes 
+	    Insets paddingLabels = new Insets(10, 10, 5, 10);
+	    Insets paddingFields = new Insets(0, 10, 10, 10);
 
+	    //COSTOKM 
+	    JLabel lblCosto = new JLabel("Costo por KM");
+	    GridBagConstraints gbc_lbl = new GridBagConstraints();
+	    gbc_lbl.insets = paddingLabels;
+	    gbc_lbl.gridx = 0; gbc_lbl.gridy = 0;
+	    panelForm.add(lblCosto, gbc_lbl);
+
+	    textCostoKM = new JTextField();
+	    GridBagConstraints gbc_txt = new GridBagConstraints();
+	    gbc_txt.insets = paddingFields;
+	    gbc_txt.fill = GridBagConstraints.HORIZONTAL;
+	    gbc_txt.gridx = 0; gbc_txt.gridy = 1;
+	    panelForm.add(textCostoKM, gbc_txt);
+	    
+	    //RECARGO
+	    JLabel lblRecargo = new JLabel("Recargo (%)");
+	    GridBagConstraints gbc_lblR = new GridBagConstraints();
+	    gbc_lblR.insets = paddingLabels;
+	    gbc_lblR.gridx = 1; gbc_lblR.gridy = 0;
+	    panelForm.add(lblRecargo, gbc_lblR);
+
+	    textRecargo = new JTextField();
+	    GridBagConstraints gbc_txtR = new GridBagConstraints();
+	    gbc_txtR.insets = paddingFields;
+	    gbc_txtR.fill = GridBagConstraints.HORIZONTAL;
+	    gbc_txtR.gridx = 1; gbc_txtR.gridy = 1;
+	    panelForm.add(textRecargo, gbc_txtR);
+	    
+	    //COSTOFIJO
+	    JLabel lblFijo = new JLabel("Costo fijo");
+	    GridBagConstraints gbc_lblF = new GridBagConstraints();
+	    gbc_lblF.insets = paddingLabels;
+	    gbc_lblF.gridx = 2; gbc_lblF.gridy = 0;
+	    panelForm.add(lblFijo, gbc_lblF);
+
+	    textCostoFijo = new JTextField();
+	    GridBagConstraints gbc_txtF = new GridBagConstraints();
+	    gbc_txtF.insets = paddingFields;
+	    gbc_txtF.fill = GridBagConstraints.HORIZONTAL;
+	    gbc_txtF.gridx = 2; gbc_txtF.gridy = 1;
+	    panelForm.add(textCostoFijo, gbc_txtF);
+
+	    //BOTONES
+	    JPanel panelBotones = new JPanel();
+	    add(panelBotones, BorderLayout.SOUTH);
+	    panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+	    
+	    JButton btnGuardar = new JButton("Guardar");
+	    btnGuardar.addActionListener(e -> presenter.guardarParametros());
+	    panelBotones.add(btnGuardar);
+	    
+	    JButton btnAtras = new JButton("Volver");
+	    btnAtras.addActionListener(e -> presenter.volverAtras());
+	    panelBotones.add(btnAtras);
 	}
+	
 	 public void setPresenter(RedFibraOpticaPresenter presenter) {
 	    	this.presenter = presenter;
 	    }

@@ -27,28 +27,44 @@ public class GestionRed {
         this.costoFijo = costoFijo;
     }
 	
-	//clase principal
-	
 	public void crearRedFibraOptica() {
-       
-        RedFibraOptica red = new RedFibraOptica(localidades);
-        calcularCostosYAgregarAristas(red);
-        MST<Localidad> mst = new MST<>(red);
-        resultado = mst.kruskal();
-        costoTotal = mst.getPesoTotal();
-    }
-	
-//	hay que implementar los parametros para que funcione
-	private void calcularCostosYAgregarAristas(RedFibraOptica red) {
-        for (int i = 0; i < localidades.size(); i++) {
-            for (int j = i + 1; j < localidades.size(); j++) {
-                Localidad origen  = localidades.get(i);
-                Localidad destino = localidades.get(j);
-                double costo = calcularCostoArista(origen, destino);
-                red.agregarArista(i, j, costo);
-            }
-        }
-    }
+	    RedFibraOptica red = new RedFibraOptica(localidades);
+	    
+	    //refactor aca para separar el calculo del costo con agregar aristas
+	    cargarAristasEnRed(red);
+	    
+	    MST<Localidad> mst = new MST<>(red);
+	    resultado = mst.kruskal();
+	    costoTotal = mst.getPesoTotal();
+	}
+
+	private void cargarAristasEnRed(RedFibraOptica red) {
+	    for (int i = 0; i < localidades.size(); i++) {
+	        for (int j = i + 1; j < localidades.size(); j++) {
+	            double costoFinal = obtenerCostoEntre(localidades.get(i), localidades.get(j));
+	            red.agregarArista(i, j, costoFinal);
+	        }
+	    }
+	}
+
+	public double obtenerCostoEntre(Localidad origen, Localidad destino) {
+	    double distancia = calcularDistanciaKm(origen, destino);
+	    
+	    //setParametros pone lo que el usuario ingrese
+	    double costoBase = distancia * this.costoPorKm;
+	    double recargoPorDistancia = 0;
+	    double recargoPorProvincia = 0;
+
+	    if (distancia > 300) {
+	        recargoPorDistancia = costoBase * (this.porcentajeRecargo / 100);
+	    }
+
+	    if (!origen.getProvincia().equalsIgnoreCase(destino.getProvincia())) {
+	        recargoPorProvincia = this.costoFijo;
+	    }
+
+	    return costoBase + recargoPorDistancia + recargoPorProvincia;
+	}
 	
 	public void guardarRedEnArchivo() {}
 	
@@ -68,22 +84,7 @@ public class GestionRed {
     public Grafo<Localidad> getResultado() {
         return resultado;
     }
-// este tambien necesita los parametros
-    private double calcularCostoArista(Localidad origen, Localidad destino) {
-        double distancia = calcularDistanciaKm(origen, destino);
-        double costo = distancia * costoPorKm;
-
-        if (distancia > 300) {
-            costo += costo * (porcentajeRecargo / 100);
-        }
-
-        if (!origen.getProvincia().equals(destino.getProvincia())) {
-            costo += costoFijo;
-        }
-
-        return costo;
-    }
-
+  
     public double calcularDistanciaKm(Localidad a, Localidad b) {
         //haversine 
         final int R = 6371;
@@ -99,6 +100,21 @@ public class GestionRed {
         double c = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1-x));
         return R * c;
     }
+
+	public double getCostoPorKm() {
+		
+		return costoPorKm;
+	}
+
+	public double getPorcentajeRecargo() {
+		
+		return porcentajeRecargo;
+	}
+
+	public double getCostoFijo() {
+		
+		return costoFijo;
+	}
     
 }
     
