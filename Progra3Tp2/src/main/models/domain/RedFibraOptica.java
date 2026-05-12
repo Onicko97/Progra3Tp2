@@ -1,9 +1,8 @@
 package models.domain;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
+import models.grafo.BFS;
 import models.grafo.Grafo;
 
 public class RedFibraOptica extends Grafo<Localidad> {
@@ -12,13 +11,22 @@ public class RedFibraOptica extends Grafo<Localidad> {
 		super(localidades);
 	}
 	
-	public void agregarLocalidad(Localidad l) {
-		//hay que verificar que el dato es correcto
-		vertices.add(l);
-	} // vertice
+	public boolean esRedValida() {
+        return BFS.esConexo(this);
+    }
 	
-	public void conectarLocalidades() {} //arista
-	public void existeRuta() {} //existe ruta entre 2 localidades?
+	public boolean existeRuta(int origen, int destino) {
+	    return BFS.alcanzables(this, origen).contains(destino);
+	}
 
-	
+	public void construirGrafoCompleto(GestionRed gestion) {
+	    int n = vertices.size();
+	    for (int i = 0; i < n; i++) {
+	        for (int j = i + 1; j < n; j++) {
+	        	
+	            double costo = gestion.obtenerCostoEntre(vertices.get(i), vertices.get(j));
+	            this.agregarArista(i, j, costo);
+	        }
+	    }
+	}
 }

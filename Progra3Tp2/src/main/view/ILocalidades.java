@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.domain.Localidad;
+import presenter.RedFibraOpticaPresenter;
 
 public interface ILocalidades {
 	 String getNombre();
@@ -15,4 +16,5 @@ public interface ILocalidades {
 	    void actualizarTabla(List<Localidad> list);
 	    void limpiarFormulario();
 	    void mostrarError(String mensaje);
+		void setPresenter(RedFibraOpticaPresenter presenter);
 }

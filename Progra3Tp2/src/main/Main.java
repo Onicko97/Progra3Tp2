@@ -1,10 +1,16 @@
+import models.domain.GestionRed;
+import presenter.RedFibraOpticaPresenter;
 import view.VentanaPrincipal;
  
 public class Main {
+    public static void main(String[] args) {
+       
+        GestionRed modelo = new GestionRed();
 
-	public static void main(String[] args) {
-		VentanaPrincipal ventana = new VentanaPrincipal();
-		ventana.mostrar();//provisorio, va en presenter
-	}
+        VentanaPrincipal vista = new VentanaPrincipal();
+        
+        RedFibraOpticaPresenter presenter = new RedFibraOpticaPresenter(vista, modelo);
 
+        presenter.iniciar();
+    }
 }

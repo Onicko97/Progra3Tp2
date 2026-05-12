@@ -19,9 +19,6 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 public class VentanaPrincipal extends JFrame  {
-	
-	private final GestionRed modelo;
-    private final RedFibraOpticaPresenter presenter;
     
 	private final Localidades pantallaLocalidades;
 	private final Resultados pantallaResultados;
@@ -30,28 +27,15 @@ public class VentanaPrincipal extends JFrame  {
 	
 	
 	public VentanaPrincipal() {
-	    //inicializa el modelo
-	    modelo = new GestionRed();
-	    
-	    //inicializa las vistas
-	    pantallaLocalidades = new Localidades();
-	    pantallaResultados = new Resultados();
-	    pantallaParametros = new Parametros();
-	    
-	    //inicializa el presenter 
-	    presenter = new RedFibraOpticaPresenter(pantallaLocalidades, pantallaResultados, pantallaParametros, modelo, this);
-	    
-	    //para desacoplar sirve
-	    pantallaResultados.setPresenter(presenter);
-	    pantallaLocalidades.setPresenter(presenter);
-	    pantallaParametros.setPresenter(presenter);
-	    
-	    
-	    configurarLayout();
-	    
-	    //asi arranca 
-	    propiedadesPorDefecto();
-	    mostrarLocalidades(); 
+		pantallaLocalidades = new Localidades();
+        pantallaResultados = new Resultados();
+        pantallaParametros = new Parametros();
+
+        propiedadesPorDefecto();
+      
+        configurarLayout();
+
+        mostrarLocalidades();
 	}
 
 	private void configurarLayout() {
@@ -81,4 +65,19 @@ public class VentanaPrincipal extends JFrame  {
     public void mostrar() {
         EventQueue.invokeLater(() -> setVisible(true));
     }
+
+	public ILocalidades getPantallaLocalidades() {
+		
+		return pantallaLocalidades;
+	}
+
+	public IResultados getPantallaResultados() {
+		
+		return pantallaResultados;
+	}
+
+	public IParametros getPantallaParametros() {
+		
+		return pantallaParametros;
+	}
 }

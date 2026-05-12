@@ -6,19 +6,25 @@ public class RedFibraOpticaPresenter {
 
     private final ILocalidades vistaLocalidades;
     private final IResultados vistaResultados; 
+    private final IParametros vistaParametros;
     private final GestionRed modelo;
     private final VentanaPrincipal ventana;
-    private final IParametros vistaParametros;
     
-    public RedFibraOpticaPresenter(ILocalidades vistaLocalidades,
-    		IResultados vistaResultados, IParametros vistaParametros, 
-    		GestionRed modelo,VentanaPrincipal ventana) {
-    	
-    	this.vistaParametros= vistaParametros;
-        this.vistaLocalidades = vistaLocalidades;
-        this.vistaResultados= vistaResultados;
-        this.modelo = modelo;
+    public RedFibraOpticaPresenter(VentanaPrincipal ventana, GestionRed modelo) {
         this.ventana = ventana;
+        this.modelo = modelo;
+    	
+        this.vistaLocalidades = ventana.getPantallaLocalidades();
+        this.vistaResultados = ventana.getPantallaResultados();
+        this.vistaParametros = ventana.getPantallaParametros();
+        
+        this.vistaLocalidades.setPresenter(this);
+        this.vistaResultados.setPresenter(this);
+        this.vistaParametros.setPresenter(this);
+    }
+    
+    public void iniciar() {
+    	ventana.mostrar();
     }
 
     public void agregarLocalidad() {

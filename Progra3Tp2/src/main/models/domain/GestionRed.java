@@ -2,7 +2,6 @@ package models.domain;
 
 
 import java.util.*;
-
 import logic.MST;
 import models.grafo.Grafo;
 
@@ -16,9 +15,9 @@ public class GestionRed {
     private double costoTotal;
     
 	public GestionRed() {
-		this.costoPorKm = 10;
-        this.porcentajeRecargo = 20;
-        this.costoFijo = 5;
+		this.costoPorKm = 0;
+        this.porcentajeRecargo = 0;
+        this.costoFijo = 0;
 	}
 		
 	public void setParametros(double costoPorKm, double porcentajeRecargo, double costoFijo) {
@@ -31,21 +30,13 @@ public class GestionRed {
 	    RedFibraOptica red = new RedFibraOptica(localidades);
 	    
 	    //refactor aca para separar el calculo del costo con agregar aristas
-	    cargarAristasEnRed(red);
+	    red.construirGrafoCompleto(this);
 	    
 	    MST<Localidad> mst = new MST<>(red);
 	    resultado = mst.kruskal();
 	    costoTotal = mst.getPesoTotal();
 	}
 
-	private void cargarAristasEnRed(RedFibraOptica red) {
-	    for (int i = 0; i < localidades.size(); i++) {
-	        for (int j = i + 1; j < localidades.size(); j++) {
-	            double costoFinal = obtenerCostoEntre(localidades.get(i), localidades.get(j));
-	            red.agregarArista(i, j, costoFinal);
-	        }
-	    }
-	}
 
 	public double obtenerCostoEntre(Localidad origen, Localidad destino) {
 	    double distancia = calcularDistanciaKm(origen, destino);

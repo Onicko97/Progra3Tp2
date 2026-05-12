@@ -1,5 +1,7 @@
 package view;
 
+import presenter.RedFibraOpticaPresenter;
+
 public interface IParametros {
 	String getCostoPorKm();
     String getPorcentajeRecargo();
@@ -8,5 +10,6 @@ public interface IParametros {
     
     void mostrarError(String mensaje);
     void mostrarExito(String mensaje);
+	void setPresenter(RedFibraOpticaPresenter presenter);
 
 }
